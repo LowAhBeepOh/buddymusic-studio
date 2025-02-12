@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddy Music Studio - Audio Editor</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include jsmediatags library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+    <!-- Replace the ID3Writer script with this version -->
+    <script src="https://cdn.jsdelivr.net/npm/browser-id3-writer@4.4.0/dist/browser-id3-writer.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+</head>
+<body>
+    <nav class="vertical-nav">
+        <div class="nav-header">
+            <h1><span class="material-icons-round">music_note</span>Buddy Music Studio</h1>
+        </div>
+        <div class="nav-tools">
+            <button id="openFile"><span class="material-icons-round">folder_open</span>Open File</button>
+            <button id="tagEditor"><span class="material-icons-round">edit</span>Tag Editor</button>
+            <button id="compatCheck"><span class="material-icons-round">check_circle</span>Compatibility Check</button>
+        </div>
+    </nav>
+    <main>
+        <div id="mainContent">
+            <div class="current-file">
+                <h2>No file selected</h2>
+                <div id="audioInfo"></div>
+            </div>
+            <div class="editor-section" id="tagEditorSection">
+                <h3>Tag Editor</h3>
+                <form id="tagForm">
+                    <!-- Required Fields Section -->
+                    <div class="form-section">
+                        <h4>Required Fields</h4>
+                        <div class="form-group">
+                            <label for="title">Title*</label>
+                            <input type="text" id="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="album">Album*</label>
+                            <input type="text" id="album" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="artist">Artist*</label>
+                            <input type="text" id="artist" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Year*</label>
+                            <input type="number" id="year" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="coverArtInput">Cover Art*</label>
+                            <input type="file" id="coverArtInput" accept="image/*" required>
+                            <div class="cover-preview" id="coverPreview"></div>
+                        </div>
+                    </div>
+
+                    <!-- Optional Fields Section -->
+                    <div class="form-section">
+                        <h4>Optional Fields</h4>
+                        <div class="form-group">
+                            <label for="genre">Genre</label>
+                            <input type="text" id="genre">
+                        </div>
+                        <div class="form-group">
+                            <label for="lyrics">Lyrics</label>
+                            <textarea id="lyrics"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Custom Tags Section -->
+                    <div class="form-section">
+                        <h4>Custom Tags</h4>
+                        <div id="customTags">
+                            <!-- Custom tags will be added here -->
+                        </div>
+                        <button type="button" id="addCustomTag" class="secondary-button">
+                            <span class="material-icons-round">add</span>Add Custom Tag
+                        </button>
+                    </div>
+
+                    <button type="submit">Save Tags</button>
+                </form>
+            </div>
+        </div>
+        
+        <div id="compatibilityPage" class="compatibility-page">
+            <button class="back-button" id="backToMain">
+                <span class="material-icons-round">arrow_back</span> Back
+            </button>
+            <h2>Compatibility Check</h2>
+            <div class="compatibility-grid">
+                <div class="requirement-card">
+                    <h3>Required Fields</h3>
+                    <div id="requiredFields"></div>
+                </div>
+                <div class="requirement-card">
+                    <h3>Optional Fields</h3>
+                    <div id="optionalFields"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="modal" id="cropperModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Crop Cover Art</h3>
+                <button type="button" class="close-modal">
+                    <span class="material-icons-round">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="cropper-container">
+                    <img id="cropperImage" src="" alt="Image to crop">
+                </div>
+                <div class="cropper-controls">
+                    <button type="button" id="rotateLeft">
+                        <span class="material-icons-round">rotate_left</span>
+                    </button>
+                    <button type="button" id="rotateRight">
+                        <span class="material-icons-round">rotate_right</span>
+                    </button>
+                    <button type="button" id="flipHorizontal">
+                        <span class="material-icons-round">flip</span>
+                    </button>
+                    <button type="button" id="flipVertical">
+                        <span class="material-icons-round">flip</span> Vertical
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="secondary-button" id="cancelCrop">Cancel</button>
+                <button type="button" id="applyCrop">Apply Crop</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
