@@ -34,14 +34,24 @@
                 <div id="audioInfo"></div>
             </div>
             <div class="editor-section" id="tagEditorSection">
+                <!-- Added notice for multiple songs -->
+                <div id="multipleSongsNotice" style="display:none; color:var(--error-color);">
+                    Multiple songs selected. Tag Editor disabled.
+                </div>
                 <h3>Tag Editor</h3>
                 <form id="tagForm">
-                    <!-- Required Fields Section -->
                     <div class="form-section">
-                        <h4>Required Fields</h4>
-                        <div class="form-group">
-                            <label for="title">Title*</label>
-                            <input type="text" id="title" required>
+                        <h4>Tag Editor Fields</h4>
+                        <!-- Wrap single-song only fields -->
+                        <div id="singleSongFields">
+                            <div class="form-group">
+                                <label for="title">Title*</label>
+                                <input type="text" id="title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lyrics">Lyrics</label>
+                                <textarea id="lyrics"></textarea>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="album">Album*</label>
@@ -52,35 +62,24 @@
                             <input type="text" id="artist" required>
                         </div>
                         <div class="form-group">
-                            <label for="year">Year*</label>
-                            <input type="number" id="year" required>
+                            <label for="year">Year</label>
+                            <input type="number" id="year">
                         </div>
                         <div class="form-group">
-                            <label for="coverArtInput">Cover Art*</label>
-                            <input type="file" id="coverArtInput" accept="image/*" required>
+                            <label for="coverArtInput">Cover Art</label>
+                            <input type="file" id="coverArtInput" accept="image/*">
                             <div class="cover-preview" id="coverPreview"></div>
                         </div>
-                    </div>
-
-                    <!-- Optional Fields Section -->
-                    <div class="form-section">
-                        <h4>Optional Fields</h4>
                         <div class="form-group">
                             <label for="genre">Genre</label>
                             <input type="text" id="genre">
-                        </div>
-                        <div class="form-group">
-                            <label for="lyrics">Lyrics</label>
-                            <textarea id="lyrics"></textarea>
                         </div>
                     </div>
 
                     <!-- Custom Tags Section -->
                     <div class="form-section">
                         <h4>Custom Tags</h4>
-                        <div id="customTags">
-                            <!-- Custom tags will be added here -->
-                        </div>
+                        <div id="customTags"></div>
                         <button type="button" id="addCustomTag" class="secondary-button">
                             <span class="material-icons-round">add</span>Add Custom Tag
                         </button>
@@ -98,12 +97,12 @@
             <h2>Compatibility Check</h2>
             <div class="compatibility-grid">
                 <div class="requirement-card">
-                    <h3>Required Fields</h3>
-                    <div id="requiredFields"></div>
+                    <h3>Song Compatibility</h3>
+                    <div id="requiredFields"><!-- Will be populated for multiple songs --></div>
                 </div>
                 <div class="requirement-card">
                     <h3>Optional Fields</h3>
-                    <div id="optionalFields"></div>
+                    <div id="optionalFields"><!-- Remains unchanged for single file --></div>
                 </div>
             </div>
         </div>
@@ -142,5 +141,6 @@
         </div>
     </div>
     <script src="script.js"></script>
+    <script src="drag-drop.js"></script>
 </body>
 </html>
